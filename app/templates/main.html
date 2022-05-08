@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}      
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">FOOD101</h1>
+        <p class="lead">Upload your picture of food - the system will classify it ;)</p>
+      </div>
+</div>
+<div class="container-sm">
+    <form action="/classify/" enctype="multipart/form-data" method="post">
+        <input name="files" type="file">
+        <input class="btn btn-primary mb-2" type="submit">
+    </form>
+</div>
+
+{% endblock %}
