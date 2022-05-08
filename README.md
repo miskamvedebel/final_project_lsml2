@@ -35,8 +35,15 @@ After the model training, pytorch model was saved. It is not a big model in the 
 
 # Instructions:
 
-1st option:
+Dockerfile:
  - git clone https://github.com/miskamvedebel/final_project_lsml2.git
  - docker build . -t food101_image
  - docker run -p 80:80 --name food101 food101_image
  - open localhost:80
+
+
+ As result you will see the following interface:
+ ![Interface](interface.png)
+
+ Once the photo is uploaded and prediction is done - the following screen will be shown:
+ ![PredictionScreen](prediction_screen.png)
