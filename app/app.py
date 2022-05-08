@@ -9,31 +9,44 @@ import torch
 from torchvision import transforms
 import torchvision.transforms.functional as TF
 from PIL import Image
-
-#CONFIG
-SIZE = (224, 224)
-
-#db
-from sqlalchemy.orm import Session
-# import crud, models, schemas
-# from database import SessionLocal, engine
+import io
 
 #applicaltion libraries
 from datetime import date
 import json
 
-# models.Base.metadata.create_all(bind=engine)
+#CONFIG AND HELPERS
+SIZE = (224, 224)
+MODEL_NAME = './app/resnet50.pt'
+MODEL = torch.load(MODEL_NAME, map_location=torch.device('cpu'))
+MODEL.eval()
+CLASSES_FILE = './app/idx2class.json'
+
+with open(CLASSES_FILE, 'r') as f:
+    IDX2CLASS = json.load(f)
+
+
+def get_prediction(inp, model=MODEL, idx2class=IDX2CLASS):
+    '''Helper function to get prediction
+
+    :param inp: reshaped image of size (224, 224)
+    :param model: pytorch model to be used
+    :param idx2class: dictionary that returns label based on index
+
+    :returns: index of the predicted image
+    '''
+    with torch.no_grad():
+        out = model(inp)
+        out = out.argmax(dim=1).item()
+
+    label = idx2class.get(str(out))
+    if label:
+        return label
+    else:
+        return 'Something strange happened during prediction, please try again'
 
 #start the app
 app = FastAPI()
-
-# Dependency
-# def get_db():
-#     db = SessionLocal()
-#     try:
-#         yield db
-#     finally:
-#         db.close()
 
 #mounting static files
 app.mount("/static", StaticFiles(directory="./app/static"), name="static")
@@ -52,6 +65,15 @@ def read_root(request: Request):
 
 @app.post("/classify/")
 async def create_upload_file(request: Request, files: list[UploadFile]):
-    result = {"filename": [file.filename for file in files]}
+    
+    request_object_content = await files[0].read()
+    img = Image.open(io.BytesIO(request_object_content)).resize(SIZE)
+
+    inp = TF.to_tensor(img)
+    inp.unsqueeze_(0)
+    idx = get_prediction(inp=inp)
+
+    result = {"filename": [file.filename for file in files], "idx": idx}
+
     return templates.TemplateResponse('results.html', context={"request": request, "result": result})
 
