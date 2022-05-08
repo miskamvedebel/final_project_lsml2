@@ -23,4 +23,20 @@ It was decided to use pretrained RESNET50 available in pytorch package. Last ful
 
 ![Architecture](picture.png)
 
+Transfer learning technique was used to train the model on 101 classes of the different food. 
+Training was done:
+ - 10 epochs;
+ - Adam optimizer;
+ - learning rate: 4e-5;
 
+Training was done in Colab, to reproduce the training, jupyter notebook is attached.
+
+After the model training, pytorch model was saved. It is not a big model in the end (around 90 MB) - so it could stay this way.
+
+# Instructions:
+
+1st option:
+ - git clone https://github.com/miskamvedebel/final_project_lsml2.git
+ - docker build . -t food101_image
+ - docker run -p 80:80 --name food101 food101_image
+ - open localhost:80

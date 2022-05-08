@@ -4,6 +4,14 @@ from fastapi import FastAPI, Request, Form, Depends, HTTPException, UploadFile, 
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
+#image and pytorch
+import torch
+from torchvision import transforms
+import torchvision.transforms.functional as TF
+from PIL import Image
+
+#CONFIG
+SIZE = (224, 224)
 
 #db
 from sqlalchemy.orm import Session
@@ -38,19 +46,6 @@ async def create_upload_files(files: list[UploadFile]):
     return {"filenames": [file.filename for file in files]}
 
 
-# @app.get("/")
-# async def main():
-#     content = """
-# <body>
-# <form action="/classify/" enctype="multipart/form-data" method="post">
-# <input name="files" type="file" multiple>
-# <input type="submit">
-# </form>
-# </body>
-#     """
-#     return HTMLResponse(content=content)
-
-
 @app.get("/")
 def read_root(request: Request):
     return templates.TemplateResponse('main.html', context={'request': request})
@@ -59,3 +54,4 @@ def read_root(request: Request):
 async def create_upload_file(request: Request, files: list[UploadFile]):
     result = {"filename": [file.filename for file in files]}
     return templates.TemplateResponse('results.html', context={"request": request, "result": result})
+

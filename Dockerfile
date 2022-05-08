@@ -5,6 +5,8 @@ WORKDIR /
 COPY ./requirements.txt /requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /requirements.txt
+# installing pytorch separately
+RUN pip3 install torch torchvision
 
 COPY ./app /app
 
