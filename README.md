@@ -50,7 +50,7 @@ Dockerfile:
 
 
 # Accuracy achieved:
-![FinalAccuracy] (final_accuracy.png)
+![FinalAccuracy](final_accuracy.png)
 
 Best accuracy achieved on validation set is 81%, with training accuracy of 85%. It is achieved on 7th epoch.
 
