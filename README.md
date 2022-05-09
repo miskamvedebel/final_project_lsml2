@@ -54,6 +54,18 @@ Dockerfile:
 
 Best accuracy achieved on validation set is 81%, with training accuracy of 85%. It is achieved on 7th epoch.
 
+# Results:
+There are some pictures to try attached.
+One of the examples look like this:
+![Result](result.png)
+
+
+# Future steps:
+- add calories prediction;
+- add option to save the image;
+- add option to store the correct answer;
+- add DB;
+
 # Materials used:
 
 - https://www.kaggle.com/datasets/kmader/food41?resource=download;
