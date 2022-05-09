@@ -59,10 +59,12 @@ There are some pictures to try attached.
 One of the examples look like this:
 ![Result](result.png)
 
+There are some unsuccessul results as well, like this:
+![Yogur](yogurt.png)
+
 
 # Future steps:
 - add calories prediction;
-- add option to save the image;
 - add option to store the correct answer;
 - add DB;
 
