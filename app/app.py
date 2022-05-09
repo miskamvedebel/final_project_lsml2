@@ -2,7 +2,7 @@ from typing import List, Optional
 #fastapi
 from fastapi import FastAPI, Request, Form, Depends, HTTPException, UploadFile, File
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 #image and pytorch
 import torch
@@ -10,9 +10,10 @@ from torchvision import transforms
 import torchvision.transforms.functional as TF
 from PIL import Image
 import io
+from starlette.responses import StreamingResponse
+
 
 #applicaltion libraries
-from datetime import date
 import json
 
 #CONFIG AND HELPERS
@@ -68,12 +69,16 @@ async def create_upload_file(request: Request, files: list[UploadFile]):
     
     request_object_content = await files[0].read()
     img = Image.open(io.BytesIO(request_object_content)).resize(SIZE)
-
+    
     inp = TF.to_tensor(img)
     inp.unsqueeze_(0)
     idx = get_prediction(inp=inp)
 
-    result = {"filename": [file.filename for file in files], "idx": idx}
+    img.save( f"./app/static/{[file.filename for file in files][0]}")
+
+    result = {"filename": [file.filename for file in files][0],
+            "picture": f"../static/{[file.filename for file in files][0]}",
+            "idx": idx}
 
     return templates.TemplateResponse('results.html', context={"request": request, "result": result})
 
