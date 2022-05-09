@@ -29,7 +29,7 @@ Training was done:
  - Adam optimizer;
  - learning rate: 4e-5;
 
-Training was done in Colab, to reproduce the training, jupyter notebook is attached.
+Training was done in Colab, to reproduce the training, jupyter notebook is attached (lsml2_final_project_maksim_lebedev.ipynb)
 
 After the model training, pytorch model was saved. It is not a big model in the end (around 90 MB) - so it could stay this way.
 
@@ -47,3 +47,16 @@ Dockerfile:
 
  Once the photo is uploaded and prediction is done - the following screen will be shown:
  ![PredictionScreen](prediction_screen.png)
+
+
+# Accuracy achieved:
+![FinalAccuracy] (final_accuracy.png)
+
+Best accuracy achieved on validation set is 81%, with training accuracy of 85%. It is achieved on 7th epoch.
+
+# Materials used:
+
+- https://www.kaggle.com/datasets/kmader/food41?resource=download;
+- https://www.kaggle.com/code/mrmaheshchavan/foodclassification-resnet-vs-efficientnet-10epochs;
+- https://www.kaggle.com/code/pranshu15/pytorch-resnet50-84/notebook;
+- https://www.kaggle.com/code/pranshu15/pytorch-efficientnetb5-acc84/notebook;
